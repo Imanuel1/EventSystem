@@ -6,6 +6,7 @@ import {
   SocketData,
 } from "../types/socket.type";
 import { io } from "../server";
+import { getAllData } from "../redis/redis";
 
 export const socketInit = (
   io: Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, any>
@@ -23,10 +24,9 @@ export const socketInit = (
       console.log(`web socket successfully connected, client id: ${socket.id}`);
 
       //subscribe to string topics
-      socket.on("eventsInit", () => {
+      socket.on("eventsInit", async () => {
         //get all events from Redis and send to this client via topic "allEvents"
-        //TODO: get all the event from Redis + stringify data
-        const data = "test";
+        const data = await getAllData();
 
         socket.emit("allEvents", data);
       });

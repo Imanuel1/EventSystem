@@ -5,6 +5,7 @@ const enum EventSource {
 }
 
 export type EventType = {
+  id: string;
   timestamp: Date;
   message: string;
   source: EventSource;

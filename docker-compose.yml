@@ -1,0 +1,33 @@
+services:
+  # Server Service
+  server:
+    container_name: server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000" # Expose server API and WebSocket port
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      CLIENT_PORT: 3000
+      PORT: 4000
+    networks:
+      - app-network
+
+  # Client Service
+  client:
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Expose client port
+    environment:
+      VITE_SERVER_URL: "http://server:4000" # Server URL for WebSocket and API calls
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true # Connect to the shared network

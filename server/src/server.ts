@@ -9,10 +9,9 @@ import { requestLog } from "./middleware/requestLog";
 
 const app = express();
 const server = http.createServer(app);
-export const io = new Server({
+export const io = new Server(server, {
   cors: {
-    origin: "*", // Replace with your client URL
-    methods: ["GET", "POST"],
+    origin: "http://localhost:3000", // Replace with your client URL
   },
 });
 
@@ -23,7 +22,7 @@ app
   .use(requestLog);
 
 server.listen(port, () => {
-  socketInit(io);
   redisSetUp();
+  socketInit(io);
   console.log(`Server is running op port ${port}`);
 });

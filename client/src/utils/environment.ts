@@ -1,5 +1,5 @@
 const serverUrl: string =
-  import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
+  import.meta.env.VITE_SERVER_URL || "http://localhost:4000";
 const allEventsTopic: string =
   import.meta.env.VITE_ALL_EVENT_TOPIC || "allEvents";
 const updateEventTopic: string =

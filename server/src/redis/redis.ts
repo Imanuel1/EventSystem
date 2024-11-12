@@ -3,7 +3,11 @@ import express, { NextFunction, Request, Response } from "express";
 import { redisDb, redisUrl } from "../environment";
 import { v4 } from "uuid";
 import { EventType } from "../types/event.type";
-import { addEvent, deleteEvent, updateEvent } from "../middleware/socketHandler";
+import {
+  addEvent,
+  deleteEvent,
+  updateEvent,
+} from "../middleware/socketHandler";
 
 export const redisClient = createClient({ url: redisUrl });
 
@@ -35,7 +39,6 @@ export const redisSetUp = () => {
     } catch (error) {
       console.log("configuration command failed!");
     }
-
   });
 };
 
@@ -81,7 +84,7 @@ const messageListener = async () => {
         break;
     }
   });
-}
+};
 
 //TODO: listener to expire keys - https://github.com/redis-developer/keyspace-notifications-node-redis/blob/main/keyspace_events_demo.gif
 // client.configSet("notify-keyspace-events", "Ex");

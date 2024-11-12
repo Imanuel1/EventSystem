@@ -5,21 +5,25 @@ import http from "http";
 import { port } from "./environment";
 import { socketInit } from "./middleware/socketHandler";
 import { redisSetUp } from "./redis/redis";
+import { requestLog } from "./middleware/requestLog";
 
 const app = express();
 const server = http.createServer(app);
 export const io = new Server({
   cors: {
-      origin: 'http://localhost:3000', // Replace with your client URL
-  }
+    origin: "*", // Replace with your client URL
+    methods: ["GET", "POST"],
+  },
 });
 
 app
-  .use(cors())
+  .use(cors({ origin: "*" }))
   .use(express.json({ limit: "5mb" }))
   .use(express.urlencoded({ extended: false }))
-  .listen(port, () => {
-    socketInit(io);
-    redisSetUp();
-    console.log(`Server is running op port ${port}`);
-  });
+  .use(requestLog);
+
+server.listen(port, () => {
+  socketInit(io);
+  redisSetUp();
+  console.log(`Server is running op port ${port}`);
+});

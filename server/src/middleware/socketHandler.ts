@@ -11,6 +11,7 @@ import { getAllData } from "../redis/redis";
 export const socketInit = (
   io: Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, any>
 ) => {
+  console.log("inside socket init");
   io.on(
     "connection",
     (
@@ -21,7 +22,9 @@ export const socketInit = (
         any
       >
     ) => {
-      console.log(`web socket successfully connected, client id: ${socket.id}`);
+      console.log(
+        `web socket successfully connected, client id: ${socket?.id}`
+      );
 
       //subscribe to string topics
       socket.on("eventsInit", async () => {
@@ -32,10 +35,10 @@ export const socketInit = (
       });
 
       socket.on("disconnect", (reason: DisconnectReason) => {
-        console.error(`client disconnect: ${socket.id}, reason: ${reason}`);
+        console.error(`client disconnect: ${socket?.id}, reason: ${reason}`);
       });
       socket.on("error", (err) => {
-        console.error(`client error: ${socket.id}, ${err}`);
+        console.error(`client error: ${socket?.id}, ${err}`);
       });
     }
   );

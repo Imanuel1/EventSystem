@@ -12,6 +12,8 @@ services:
       REDIS_PORT: 6379
       CLIENT_PORT: 3000
       PORT: 4000
+      WDS_SOCKET_HOST: "0.0.0.0"
+      WDS_SOCKET_PORT: "0"
     networks:
       - app-network
 
@@ -24,6 +26,8 @@ services:
     ports:
       - "3000:3000" # Expose client port
     environment:
+      WDS_SOCKET_HOST: localhost
+      WDS_SOCKET_PORT: 3000
       VITE_SERVER_URL: "http://server:4000" # Server URL for WebSocket and API calls
     networks:
       - app-network
